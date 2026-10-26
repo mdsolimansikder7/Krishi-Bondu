@@ -1,0 +1,9 @@
+{
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "functions": {
+    "api/[...path].ts": {
+      "maxDuration": 60
+    }
+  }
+}
