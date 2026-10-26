@@ -1,0 +1,6 @@
+{
+  "name": "কৃষিবন্ধু — কৃষকের ডিজিটাল সহকারী",
+  "description": "বাংলাদেশের কৃষকদের জন্য আবহাওয়া, বাজারদর, ফসলের রোগ ও প্রতিকার, কৃষি ক্যালেন্ডার, কৃষি ক্যালকুলেটর এবং ফসল বিক্রির পূর্ণাঙ্গ ডিজিটাল প্ল্যাটফর্ম।",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "krishi-bondu",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "install:all": "npm ci --prefix backend && npm ci --prefix frontend",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "lint": "npm --prefix frontend run lint && npm --prefix backend run lint",
+    "build": "npm --prefix frontend run build && npm --prefix backend run build",
+    "test": "npm --prefix backend test"
+  }
+}

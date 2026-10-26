@@ -1,0 +1,243 @@
+import {
+  DivisionEntity,
+  DistrictEntity,
+  UpazilaEntity,
+  PlatformUser,
+  AgriArticleItem,
+  ReportComplaintItem,
+  AuditLogEntry,
+} from '../types/index.ts';
+import {
+  COMPLETE_DIVISIONS,
+  COMPLETE_DISTRICTS,
+  COMPLETE_UPAZILAS,
+} from './bdCompleteLocations.ts';
+
+/**
+ * 8 Official Administrative Divisions of Bangladesh
+ */
+export const INITIAL_DIVISIONS: DivisionEntity[] = COMPLETE_DIVISIONS;
+
+/**
+ * Complete 64 Districts of Bangladesh linked by divisionId
+ */
+export const INITIAL_DISTRICTS: DistrictEntity[] = COMPLETE_DISTRICTS;
+
+/**
+ * Complete Upazilas across all 64 Districts of Bangladesh with Upazila-specific Latitude & Longitude coordinates
+ */
+export const INITIAL_UPAZILAS: UpazilaEntity[] = COMPLETE_UPAZILAS;
+
+export const INITIAL_PLATFORM_USERS: PlatformUser[] = [
+  {
+    id: 'usr-1',
+    nameBn: 'মোঃ সোলায়মান শিকদার',
+    email: 'mdsolimansikder62@gmail.com',
+    phoneBn: '০১৭১২-৩৪৫৬৭৮',
+    roleBn: 'প্রশাসক',
+    adminRole: 'Super Admin',
+    divisionId: 'div-rajshahi',
+    districtId: 'dist-bogura',
+    upazilaId: 'upz-shibganj',
+    status: 'সক্রিয়',
+    joinedAtBn: '০১ বৈশাখ ১৪৩৩',
+    reportsCount: 0,
+  },
+  {
+    id: 'usr-2',
+    nameBn: 'ড. মোঃ মাহবুবুর রহমান',
+    email: 'mahbub.brri@agri.gov.bd',
+    phoneBn: '০১৭১৫-২২৩৩৪৪',
+    roleBn: 'কৃষি বিশেষজ্ঞ',
+    adminRole: 'Content Editor',
+    divisionId: 'div-dhaka',
+    districtId: 'dist-gazipur',
+    upazilaId: 'upz-kaliganj',
+    status: 'সক্রিয়',
+    joinedAtBn: '১০ বৈশাখ ১৪৩৩',
+    reportsCount: 0,
+  },
+  {
+    id: 'usr-3',
+    nameBn: 'মোঃ রফিকুল ইসলাম',
+    email: 'rafiqul.farmer@krishibondhu.bd',
+    phoneBn: '০১৮১৯-৮৭৬৫৪৩',
+    roleBn: 'কৃষক',
+    divisionId: 'div-rajshahi',
+    districtId: 'dist-bogura',
+    upazilaId: 'upz-shibganj',
+    status: 'সক্রিয়',
+    joinedAtBn: '১৫ জ্যৈষ্ঠ ১৪৩৩',
+    reportsCount: 0,
+  },
+  {
+    id: 'usr-4',
+    nameBn: 'আব্দুস সালাম মণ্ডল',
+    email: 'salam.paba@krishibondhu.bd',
+    phoneBn: '০১৯১১-৪৪৫৫৬৬',
+    roleBn: 'কৃষক',
+    divisionId: 'div-rajshahi',
+    districtId: 'dist-rajshahi',
+    upazilaId: 'upz-paba',
+    status: 'সক্রিয়',
+    joinedAtBn: '২০ আষাঢ় ১৪৩৩',
+    reportsCount: 0,
+  },
+  {
+    id: 'usr-5',
+    nameBn: 'হাজেরা বেগম (কৃষাণী সমবায়)',
+    email: 'hajera.jashore@krishibondhu.bd',
+    phoneBn: '০১৭৩৩-৯৯৮৮৭৭',
+    roleBn: 'কৃষক',
+    divisionId: 'div-khulna',
+    districtId: 'dist-jashore',
+    upazilaId: 'upz-jhikargacha',
+    status: 'সক্রিয়',
+    joinedAtBn: '০৫ শ্রাবণ ১৪৩৩',
+    reportsCount: 0,
+  },
+  {
+    id: 'usr-6',
+    nameBn: 'মোঃ কামরুল হাসান (আড়তদার)',
+    email: 'kamrul.buyer@karwanbazar.bd',
+    phoneBn: '০১৬৭৭-১১২২৩৩',
+    roleBn: 'ক্রেতা',
+    divisionId: 'div-dhaka',
+    districtId: 'dist-dhaka',
+    upazilaId: 'upz-savar',
+    status: 'সক্রিয়',
+    joinedAtBn: '১২ ভাদ্র ১৪৩৩',
+    reportsCount: 1,
+  },
+  {
+    id: 'usr-7',
+    nameBn: 'কৃষিবিদ শারমিন আক্তার',
+    email: 'sharmin.dae@agri.gov.bd',
+    phoneBn: '০১৫৫২-৩৩৪৪৫৫',
+    roleBn: 'সম্পাদক',
+    adminRole: 'Market Manager',
+    divisionId: 'div-rangpur',
+    districtId: 'dist-dinajpur',
+    upazilaId: 'upz-biral',
+    status: 'সক্রিয়',
+    joinedAtBn: '১৮ আশ্বিন ১৪৩৩',
+    reportsCount: 0,
+  },
+  {
+    id: 'usr-8',
+    nameBn: 'মোঃ তানভীর আহমেদ',
+    email: 'tanvir.mod@krishibondhu.bd',
+    phoneBn: '০১৭৮৮-৫৫৬৬৭৭',
+    roleBn: 'মডারেটর',
+    adminRole: 'Moderator',
+    divisionId: 'div-chattogram',
+    districtId: 'dist-cumilla',
+    upazilaId: 'upz-burichang',
+    status: 'সক্রিয়',
+    joinedAtBn: '০২ কার্তিক ১৪৩৩',
+    reportsCount: 0,
+  },
+];
+
+export const INITIAL_AGRI_ARTICLES: AgriArticleItem[] = [
+  {
+    id: 'art-1',
+    titleBn: 'আমন ধানে পর্যায়ক্রমে ভিজানো ও শুকানো (AWD) সেচ প্রযুক্তির সুফল',
+    categoryBn: 'চাষাবাদ প্রযুক্তি',
+    summaryBn: 'জমিতে ছিদ্রযুক্ত পিভিসি পাইপ বসিয়ে পানির স্তর পর্যবেক্ষণ করে সেচ দিলে ৩০% পানি ও জ্বালানি খরচ সাশ্রয় হয় এবং ফলন বাড়ে।',
+    contentBn: 'বাংলাদেশ ধান গবেষণা ইনস্টিটিউট (BRRI) উদ্ভাবিত AWD পদ্ধতিতে জমিতে সবসময় পানি আটকে না রেখে পাইপের তলায় পানি নামলে সেচ দিতে হয়। এতে ধান গাছের শিকড় গভীরে যায়, কুশির সংখ্যা বাড়ে এবং কারেন্ট পোকার আক্রমণ কমে।',
+    authorBn: 'ড. মোঃ মাহবুবুর রহমান',
+    publishedAtBn: '০৫ কার্তিক ১৪৩৩',
+    status: 'প্রকাশিত',
+  },
+  {
+    id: 'art-2',
+    titleBn: 'সরিষার ফলন বৃদ্ধিতে বোরন ও জিপসাম সারের ভূমিকা এবং মৌমাছি পালন',
+    categoryBn: 'সার ও মাটি ব্যবস্থাপনা',
+    summaryBn: 'সরিষা ক্ষেতে পরিমিত বোরন সার প্রয়োগ এবং মৌমাছির বাক্স স্থাপন করলে পরাগায়ন বেড়ে ফলন ২০% পর্যন্ত বৃদ্ধি পায়।',
+    contentBn: 'অনেক সময় সরিষা গাছে প্রচুর ফুল আসলেও শুঁটিতে দানা কম হয় বা চিটা হয়। মাটিতে বোরনের ঘাটতি থাকলে এমনটি ঘটে। শেষ চাষের সময় বিঘা প্রতি ২–২.৫ কেজি বোরন সার ও জিপসাম প্রয়োগ করলে দানা পুষ্ট হয় ও তেলের পরিমাণ বাড়ে।',
+    authorBn: 'কৃষিবিদ শারমিন আক্তার',
+    publishedAtBn: '০৮ কার্তিক ১৪৩৩',
+    status: 'প্রকাশিত',
+  },
+  {
+    id: 'art-3',
+    titleBn: 'শীতকালীন সবজিতে ফেরোমন ফাঁদ ও হলুদ আঠালো ফাঁদের সঠিক ব্যবহার',
+    categoryBn: 'রোগ ও বালাই দমন',
+    summaryBn: 'রাসায়নিক কীটনাশক ছাড়াই নিরাপদ বেগুন, টমেটো ও লাউ উৎপাদনে সমন্বিত বালাই ব্যবস্থাপনা (IPM)।',
+    contentBn: 'বেগুনের ডগা ও ফল ছিদ্রকারী পোকা এবং সবজির সাদা মাছি ও জাব পোকা দমনে চারা লাগানোর ২ সপ্তাহ পর থেকেই প্রতি শতকে ১টি করে সেক্স ফেরোমন ফাঁদ ও হলুদ আঠালো ফাঁদ স্থাপন করুন।',
+    authorBn: 'ড. মোঃ মাহবুবুর রহমান',
+    publishedAtBn: '১০ কার্তিক ১৪৩৩',
+    status: 'খসড়া',
+  },
+];
+
+export const INITIAL_REPORTS: ReportComplaintItem[] = [
+  {
+    id: 'rep-1',
+    typeBn: 'বিজ্ঞাপন সংক্রান্ত অভিযোগ',
+    targetTitleBn: 'বারি সরিষা-১৪ (তেল ও বীজের উপযোগী) — ময়মনসিংহ',
+    targetId: 'mkt-4',
+    reportedByBn: 'মোঃ কামরুল হাসান',
+    districtBn: 'ময়মনসিংহ',
+    reasonBn: 'বিজ্ঞাপনে উল্লেখিত ফোনে যোগাযোগ করা হলে বিক্রেতা অতিরিক্ত অগ্রিম টাকা দাবি করছেন। যাচাই করার অনুরোধ।',
+    createdAtBn: '৩ ঘণ্টা আগে',
+    status: 'বিবেচনাধীন',
+  },
+  {
+    id: 'rep-2',
+    typeBn: 'বাজারদর সংশোধনের অনুরোধ',
+    targetTitleBn: 'কাঁচা মরিচ (বগুড়া/বিন্দু) — সাতমাথা বাজার',
+    targetId: 'mp-8',
+    reportedByBn: 'মোঃ রফিকুল ইসলাম',
+    districtBn: 'বগুড়া',
+    reasonBn: 'আজ সকালে মহাস্থান ও সাতমাথা বাজারে কাঁচা মরিচের পাইকারি দর কেজি প্রতি ১০৫ টাকায় নেমেছে।',
+    createdAtBn: '৫ ঘণ্টা আগে',
+    status: 'বিবেচনাধীন',
+  },
+];
+
+export const INITIAL_AUDIT_LOGS: AuditLogEntry[] = [
+  {
+    id: 'aud-1',
+    requestId: 'REQ-98241',
+    adminId: 'usr-1',
+    adminNameBn: 'মোঃ সোলায়মান শিকদার',
+    adminRole: 'Super Admin',
+    actionBn: 'উপজেলা স্থানাঙ্ক ও অবস্থান যাচাই সম্পন্ন',
+    resourceTypeBn: 'অবস্থান',
+    resourceId: 'upz-kaliganj',
+    previousValueBn: 'অযাচাইকৃত স্থানাঙ্ক',
+    newValueBn: 'কালীগঞ্জ, গাজীপুর (২৩.৯২৮১° উ, ৯০.৫৬৯৪° পূ) — সক্রিয়',
+    reasonBn: 'সরকারি প্রশাসনিক তালিকা ও আবহাওয়া ম্যাপিং হালনাগাদ',
+    timestampBn: 'আজ সকাল ৯:১০ মিনিট',
+  },
+  {
+    id: 'aud-2',
+    requestId: 'REQ-98245',
+    adminId: 'usr-7',
+    adminNameBn: 'কৃষিবিদ শারমিন আক্তার',
+    adminRole: 'Market Manager',
+    actionBn: 'বাজারদর যাচাই ও প্রকাশ (Published)',
+    resourceTypeBn: 'বাজারদর',
+    resourceId: 'mp-1',
+    previousValueBn: 'Pending Review (৳ ১,২৬০/মণ)',
+    newValueBn: 'Published (৳ ১,২৮০/মণ — মহাস্থান হাট, বগুড়া)',
+    reasonBn: 'কৃষি বিপণন অধিদপ্তর (DAM) সকাল ৯:৩০ প্রতিবেদন অনুযায়ী',
+    timestampBn: 'আজ সকাল ৯:৩৫ মিনিট',
+  },
+  {
+    id: 'aud-3',
+    requestId: 'REQ-98250',
+    adminId: 'usr-8',
+    adminNameBn: 'মোঃ তানভীর আহমেদ',
+    adminRole: 'Moderator',
+    actionBn: 'ফসল বিক্রির বিজ্ঞাপন অনুমোদন',
+    resourceTypeBn: 'বিজ্ঞাপন',
+    resourceId: 'mkt-1',
+    previousValueBn: 'Pending',
+    newValueBn: 'Published (নতুন আমন ধান — ৮৫ মণ)',
+    reasonBn: 'কৃষকের পরিচয় ও ফসলের বিবরণ সঠিক পাওয়া গেছে',
+    timestampBn: 'আজ সকাল ১০:০৫ মিনিট',
+  },
+];

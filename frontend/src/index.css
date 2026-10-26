@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Noto Sans Bengali', system-ui, -apple-system, sans-serif;
+    background-color: #F5F8F1;
+    color: #173B2A;
+  }
+
+  .font-mono-tabular {
+    font-family: 'JetBrains Mono', 'Noto Sans Bengali', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
