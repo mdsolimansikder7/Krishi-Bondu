@@ -715,6 +715,7 @@ export default function App() {
         selectedUpazilaId={selectedUpazilaId}
         onSelectHierarchyLocation={handleSelectHierarchyLocation}
         weatherData={weatherData}
+        weatherLoading={weatherLoading}
         globalSearch={globalSearch}
         onSearchChange={setGlobalSearch}
         onSearchSubmit={handleGlobalSearchSubmit}

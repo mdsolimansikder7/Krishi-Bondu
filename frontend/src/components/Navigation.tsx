@@ -53,7 +53,19 @@ interface NavigationProps {
     districtId: string;
     upazilaId: string;
   }) => void;
-  weatherData?: any;
+  weatherData?: {
+    current?: {
+      tempC?: number;
+      conditionBn?: string;
+      rainProbPercent?: number;
+      humidityPercent?: number;
+      windSpeedKmh?: number;
+    };
+    advisory?: {
+      alertMessageBn?: string;
+    };
+  } | null;
+  weatherLoading?: boolean;
   globalSearch: string;
   onSearchChange: (q: string) => void;
   onSearchSubmit: (e: React.FormEvent) => void;
@@ -99,6 +111,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   selectedUpazilaId = '',
   onSelectHierarchyLocation,
   weatherData,
+  weatherLoading = false,
   globalSearch,
   onSearchChange,
   onSearchSubmit,
@@ -182,13 +195,33 @@ export const Navigation: React.FC<NavigationProps> = ({
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <button
               type="button"
-              onClick={() =>
+              onClick={() => {
+                const area =
+                  `${selectedDistrict.divisionBn} বিভাগের ${selectedDistrict.nameBn} জেলার ${selectedUpazila} উপজেলা`;
+                const currentWeather = weatherData?.current;
+                const weatherSummary = weatherLoading
+                  ? 'এই এলাকার সর্বশেষ আবহাওয়ার তথ্য এখন হালনাগাদ হচ্ছে।'
+                  : currentWeather
+                    ? [
+                        `আজকের আবহাওয়া ${currentWeather.conditionBn || 'তথ্য পাওয়া যায়নি'}.`,
+                        currentWeather.tempC !== undefined
+                          ? `তাপমাত্রা ${toBengaliNumber(currentWeather.tempC)} ডিগ্রি সেলসিয়াস।`
+                          : '',
+                        currentWeather.rainProbPercent !== undefined
+                          ? `বৃষ্টির সম্ভাবনা ${toBengaliNumber(currentWeather.rainProbPercent)} শতাংশ।`
+                          : '',
+                        weatherData?.advisory?.alertMessageBn || '',
+                      ]
+                        .filter(Boolean)
+                        .join(' ')
+                    : 'এই এলাকার আবহাওয়ার তথ্য এখনো পাওয়া যায়নি।';
+
                 onSpeakText(
-                  `কৃষিবন্ধু ওয়েবসাইটে স্বাগতম। আপনার বর্তমান নির্বাচিত এলাকা ${selectedDistrict.divisionBn} বিভাগের ${selectedDistrict.nameBn} জেলার ${selectedUpazila} উপজেলা।`
-                )
-              }
+                  `কৃষিবন্ধু ওয়েবসাইটে স্বাগতম। আপনার নির্বাচিত এলাকা ${area}। ${weatherSummary}`
+                );
+              }}
               title="বাংলায় পড়ে শোনান"
-              aria-label="পৃষ্ঠার সারসংক্ষেপ বাংলায় পড়ে শোনান"
+              aria-label="নির্বাচিত এলাকার নাম ও আবহাওয়ার খবর বাংলায় পড়ে শোনান"
               className="hidden xl:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#F5F8F1] hover:bg-[#DCFCE7] text-[#166534] text-xs font-semibold border border-stone-200 transition-colors whitespace-nowrap cursor-pointer"
             >
               <Volume2 className="w-4 h-4" />
