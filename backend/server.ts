@@ -30,7 +30,7 @@ import {
   validateNewDistrict,
   validateNewUpazila,
   validateMarketPriceInput,
-  INITIAL_AUTH_ACCOUNTS,
+  PUBLIC_DEMO_ACCOUNTS,
   AuthAccount,
 } from '../shared/utils/locationAndAdminRules.ts';
 import {
@@ -87,7 +87,6 @@ interface CachedWeather {
 }
 const weatherCache = new Map<string, CachedWeather>();
 const CACHE_TTL_MS = 15 * 60 * 1000;
-const publicDemoAccounts = INITIAL_AUTH_ACCOUNTS.filter((account) => account.userRoleBn !== 'কৃষক');
 let weatherTelemetry = {
   lastSuccessISO: new Date().toISOString(),
   totalRequests: 14,
@@ -271,7 +270,7 @@ async function initializeAuthDatabase() {
   await connectMongo();
   const userCollection = mongoDb.collection('user');
 
-  for (const account of publicDemoAccounts) {
+  for (const account of PUBLIC_DEMO_ACCOUNTS) {
     if (await userCollection.findOne({ email: account.email })) continue;
     if (!account.password) {
       throw new Error(`Demo account ${account.username} has no password configured.`);
@@ -659,7 +658,7 @@ export async function createApp(options: { useVite?: boolean } = {}) {
   });
 
   app.get('/api/auth/demo-accounts', (_req, res) => {
-    return res.json({ accounts: publicDemoAccounts });
+    return res.json({ accounts: PUBLIC_DEMO_ACCOUNTS });
   });
 
   app.get('/api/auth/providers', (_req, res) => {

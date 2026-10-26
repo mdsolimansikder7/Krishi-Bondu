@@ -17,6 +17,7 @@ import {
   ADMIN_ROLE_DESCRIPTIONS_BN,
   DivisionEntity,
   DistrictEntity,
+  PUBLIC_DEMO_ACCOUNTS,
   UpazilaEntity,
 } from '@shared/utils/locationAndAdminRules';
 import { CascadingLocationSelector } from './CascadingLocationSelector';
@@ -51,7 +52,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [demoAccounts, setDemoAccounts] = useState<AuthAccount[]>([]);
+  const [demoAccounts, setDemoAccounts] = useState<AuthAccount[]>(PUBLIC_DEMO_ACCOUNTS);
+  const [demoAccountsApiAvailable, setDemoAccountsApiAvailable] = useState(true);
   const [googleEnabled, setGoogleEnabled] = useState(false);
 
   // Sign Up State
@@ -70,14 +72,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       setMode(initialMode);
       setLoading(false);
       setAuthError(null);
+      setDemoAccounts(PUBLIC_DEMO_ACCOUNTS);
+      setDemoAccountsApiAvailable(true);
       apiFetch('/api/auth/demo-accounts')
         .then(async (response) => {
           if (!response.ok) throw new Error('ডেমো অ্যাকাউন্ট লোড করা যায়নি।');
           const result: { accounts: AuthAccount[] } = await response.json();
-          setDemoAccounts(result.accounts);
+          if (Array.isArray(result.accounts) && result.accounts.length > 0) {
+            setDemoAccounts(result.accounts);
+          }
         })
         .catch((error) => {
           console.error('Unable to load demo accounts:', error);
+          setDemoAccountsApiAvailable(false);
         });
       apiFetch('/api/auth/providers')
         .then(async (response) => {
@@ -392,6 +399,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                     </div>
                     <span className="text-[11px] text-stone-500">ভূমিকা অনুযায়ী অ্যাডমিন অ্যাক্সেস থাকতে পারে</span>
                   </div>
+                  {!demoAccountsApiAvailable && (
+                    <p role="status" className="text-[11px] text-amber-800">
+                      ডেমো আইডি দেখা যাচ্ছে। সাইন ইন করতে backend সংযুক্ত থাকতে হবে; Vercel frontend project-এ সঠিক VITE_API_BASE_URL সেট করুন।
+                    </p>
+                  )}
 
                   <div className="overflow-x-auto bg-white rounded-xl border border-stone-200/80">
                     <table className="w-full text-left border-collapse text-xs">

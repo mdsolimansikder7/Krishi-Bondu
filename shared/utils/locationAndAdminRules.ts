@@ -249,6 +249,10 @@ export const INITIAL_AUTH_ACCOUNTS: AuthAccount[] = [
   },
 ];
 
+export const PUBLIC_DEMO_ACCOUNTS = INITIAL_AUTH_ACCOUNTS.filter(
+  (account) => account.userRoleBn !== 'কৃষক'
+);
+
 export function canAccessAdminPanel(account: AuthAccount | null | undefined): boolean {
   if (!account || !account.adminRole) return false;
   return getAllowedAdminModulesForRole(account.adminRole).length > 0;

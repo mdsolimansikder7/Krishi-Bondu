@@ -67,7 +67,7 @@ export const MyFarmView: React.FC<MyFarmViewProps> = ({
       })
       .catch((error) => {
         console.error('Unable to load auth providers:', error);
-        setAuthError('Google সাইন-ইন অপশন লোড করা যায়নি।');
+        setGoogleEnabled(false);
       });
   }, [currentUser]);
 

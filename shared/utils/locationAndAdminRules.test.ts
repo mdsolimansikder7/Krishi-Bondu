@@ -11,6 +11,7 @@ import {
   validateMarketPriceInput,
   canAccessAdminPanel,
   getAllowedAdminModulesForRole,
+  PUBLIC_DEMO_ACCOUNTS,
   DivisionEntity,
   DistrictEntity,
   UpazilaEntity,
@@ -20,6 +21,12 @@ import {
   INITIAL_DISTRICTS,
   INITIAL_UPAZILAS,
 } from '../data/locationAndAdminData.ts';
+
+test('Public demo accounts include credentials and exclude the farmer account', () => {
+  assert.ok(PUBLIC_DEMO_ACCOUNTS.length > 0);
+  assert.ok(PUBLIC_DEMO_ACCOUNTS.every((account) => account.userRoleBn !== 'কৃষক'));
+  assert.ok(PUBLIC_DEMO_ACCOUNTS.every((account) => Boolean(account.username && account.password)));
+});
 
 const mockDivisions: DivisionEntity[] = [
   { id: 'div-dhaka', nameBn: 'ঢাকা', slug: 'dhaka', code: 'BD-30', isActive: true, createdAtBn: 'আজ', updatedAtBn: 'আজ' },
