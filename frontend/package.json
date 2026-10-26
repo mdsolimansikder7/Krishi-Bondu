@@ -1,3 +1,4 @@
+
 {
   "name": "@krishi-bondu/frontend",
   "private": true,
@@ -8,9 +9,9 @@
   },
   "scripts": {
     "dev": "vite --config vite.config.ts",
-    "build": "vite build --config vite.config.ts",
+    "build": "tsc --noEmit -p tsconfig.json && vite build --config vite.config.ts",
     "preview": "vite preview --config vite.config.ts",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^6.1.1",
