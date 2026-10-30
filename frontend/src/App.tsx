@@ -67,6 +67,7 @@ import { MyFarmView } from './components/MyFarmAndAdminView';
 import { AdminPanelSuite } from './components/AdminPanelSuite';
 import { authClient } from './lib/auth-client';
 import { Sprout, PhoneCall } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('home');
@@ -951,6 +952,9 @@ export default function App() {
 
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav activeTab={activeTab} onSelectTab={setActiveTab} />
+      
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 }
